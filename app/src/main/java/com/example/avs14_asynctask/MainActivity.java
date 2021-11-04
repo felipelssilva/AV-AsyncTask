@@ -42,21 +42,29 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public String doInBackground(String... params)
         {
+            String returning = "";
 
-            EditText etName = findViewById(R.id.etName);
-            EditText etEmail = findViewById(R.id.etEmail);
-            EditText etMatricula = findViewById(R.id.etMatricula);
+            try {
+                EditText etName = findViewById(R.id.etName);
+                EditText etEmail = findViewById(R.id.etEmail);
+                EditText etMatricula = findViewById(R.id.etMatricula);
 
-            Estudante estudante = new Estudante(
-                    etName.getText().toString(),
-                    etEmail.getText().toString(),
-                    Integer.parseInt(etMatricula.getText().toString())
-            );
+                Estudante estudante = new Estudante(
+                        etName.getText().toString(),
+                        etEmail.getText().toString(),
+                        Integer.parseInt(etMatricula.getText().toString())
+                );
 
-            EstudanteDAO estudanteDAO = new EstudanteDAO(MainActivity.this);
-            long id = estudanteDAO.inserir(estudante);
+                EstudanteDAO estudanteDAO = new EstudanteDAO(MainActivity.this);
+                estudanteDAO.inserir(estudante);
 
-            return String.valueOf(id);
+                returning = "Estudante Cadastado com sucesso!";
+
+            } catch (Exception e) {
+                returning = "Algo de errado aconteceu, tente novamente: "+ e.getMessage();
+            }
+            
+            return returning;
         }
 
         @Override
